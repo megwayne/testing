@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pepper watering megasheet</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 300px;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pepper watering megasheet</h1>
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+    <script>
+      const today = new Date();
+      const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
+      const dates = [];
+
+      // Get yesterday
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+      dates.push({ date: yesterday, status: "completed" });
+
+      // Add remaining days up to Sunday
+      for (let i = 0; i < (7 - yesterday.getDay()) % 7; i++) {
+        const d = new Date(yesterday);
+        d.setDate(yesterday.getDate() + i + 1);
+        dates.push({ date: d, status: "To do" });
+      }
+
+      // Render table rows
+      dates.forEach(({ date, status }) => {
+        const formatted = date.toLocaleDateString(undefined, {
+          weekday: 'short', month: 'short', day: 'numeric'
+        });
+        document.write(`<tr><td>${formatted}</td><td>${status}</td></tr>`);
+      });
+    </script>
+  </table>
+</body>
+</html>
